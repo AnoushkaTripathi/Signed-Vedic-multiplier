@@ -1,12 +1,12 @@
-// Code your design here
-module msb_complement;
-  reg signed [8:0] input1;
- reg signed [8:0] input2;
+`timescale 1ns / 1ps
+module msb_complement(input1,input2,fresult);
+ input  [8:0] input1;
+input [8:0] input2;
 
   wire [8:0] output1,output2;
-  
+  wire xor_result;
   wire signed [15:0] result;
-  output signed  [16:0] fresult;
+  output [16:0] fresult;
 // Check MSB of input1 and complement if necessary
   assign output1 = (input1[8] == 1) ? ~input1 + 1 : input1;
 
@@ -17,6 +17,7 @@ module msb_complement;
     .b(output2[7:0]),
     .c(result[15:0])
 );
+
   assign xor_result = input1[8] ^ input2[8];
    
   always@(result)
@@ -36,27 +37,27 @@ endmodule
 
 
 module add_4_bit (a,b,sum);
-  input [3:0] a,b;
-  output [4:0]sum;
+input [3:0] a,b;
+output [4:0]sum;
 assign sum=a+b;
 endmodule
 
 
 module add_6_bit (a,b,sum);
-  input [5:0] a,b;
-  output [6:0] sum;
+input [5:0] a,b;
+output [6:0] sum;
 assign sum = a+b;
 endmodule
 
 module add_8_bit (a,b,sum);
-  input[7:0] a,b;
-  output[8:0] sum;
+input[7:0] a,b;
+output[8:0] sum;
 assign sum = a+b;
 endmodule
 
 module add_12_bit (a,b,sum);
-  input[11:0] a,b;
-  output[12:0] sum;
+input[11:0] a,b;
+output[12:0] sum;
 assign sum = a+b;
 endmodule
 
@@ -112,15 +113,15 @@ endmodule
 
 module vedic_8X8(a,b,c);
    
-  input [7:0]a;
-  input [7:0]b;
-  output [15:0]c;
+input [7:0]a;
+input [7:0]b;
+output [15:0]c;
 
 wire [15:0]q0;    
 wire [15:0]q1;    
 wire [15:0]q2;
 wire [15:0]q3;    
-  wire [15:0]c;
+wire [15:0]c;
 wire [7:0]temp1;
 wire [11:0]temp2;
 wire [11:0]temp3;
@@ -144,11 +145,13 @@ assign temp4={4'b0,q4[7:0]};
 add_12_bit z7(temp4,q5,q6);
 
 assign c[3:0]=q0[3:0];
-  assign c[15:4]=q6[11:0];
+assign c[15:4]=q6[11:0];
 endmodule
 
-// Code your testbench here
-// or browse Examples
+
+
+
+
 module test_vedic_8;
 
   reg signed [8:0] a;
