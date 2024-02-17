@@ -1,11 +1,8 @@
 `timescale 1ns / 1ps
-
-
-
 module msb_complement(
-input signed [8:0] input1,
-input signed [8:0] input2,
-  output reg signed [17:0] fresult
+  input signed [7:0] input1,
+  input signed [7:0] input2,
+  output reg signed [15:0] fresult
 );
 
 wire [7:0] output1, output2;
@@ -13,10 +10,10 @@ wire [15:0] multiplier_result;
 wire xor_result;
 
 // Check MSB of input1 and complement if necessary
-assign output1 = (input1[8] == 1) ? (~input1 + 1) : input1;
+  assign output1 = (input1[7] == 1) ? (~input1 + 1) : input1;
 
 // Check MSB of input2 and complement if necessary
-assign output2 = (input2[8] == 1) ? (~input2 + 1) : input2;
+  assign output2 = (input2[7] == 1) ? (~input2 + 1) : input2;
 
 vedic_8X8 multiplier_instance(
 .a(output1[7:0]),
@@ -25,7 +22,7 @@ vedic_8X8 multiplier_instance(
 );
 
 always @* begin
-if (input1[8] ^ input2[8] == 1) begin
+  if (input1[7] ^ input2[7] == 1) begin
 fresult = {1'b1, ~multiplier_result + 1};
 end else begin
 fresult = {1'b0, multiplier_result};
@@ -232,16 +229,14 @@ assign c[15:4]=q6[11:0];
 
 
 endmodule
-
-// or browse Examples
 `timescale 1ns / 1ps
 module test_vedic_8;
 
-reg signed [8:0] a;
-reg signed [8:0] b;
+  reg signed [7:0] a;
+  reg signed [7:0] b;
 
-  wire signed [17:0] c;
-reg signed [15:0] prod;
+  wire signed [15:0] c;
+
 integer i;
 
 // Instantiate the Unit Under Test (UUT)
