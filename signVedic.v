@@ -23,9 +23,9 @@ vedic_8X8 multiplier_instance(
 
 always @* begin
   if (input1[7] ^ input2[7] == 1) begin
-fresult = {1'b1, ~multiplier_result + 1};
+fresult = ~multiplier_result + 1;
 end else begin
-fresult = {1'b0, multiplier_result};
+fresult =  multiplier_result;
 end
 end
 
@@ -208,10 +208,10 @@ wire [7:0]q4;
 wire [11:0]q5;
 wire [11:0]q6;
 // 4,4 variables to 8bit multiplier
-vedic_4x4 z1(a[3:0],b[3:0],q0[15:0]);
-vedic_4x4 z2(a[7:4],b[3:0],q1[15:0]);
-vedic_4x4 z3(a[3:0],b[7:4],q2[15:0]);
-vedic_4x4 z4(a[7:4],b[7:4],q3[15:0]);
+  vedic_4x4 z1(a[3:0],b[3:0],q0[7:0]);
+  vedic_4x4 z2(a[7:4],b[3:0],q1[7:0]);
+  vedic_4x4 z3(a[3:0],b[7:4],q2[7:0]);
+  vedic_4x4 z4(a[7:4],b[7:4],q3[7:0]);
 
 //full adders
 assign temp1 ={4'b0,q0[7:4]};
